@@ -13,7 +13,7 @@
     
     <!-- CSS -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     
     {% block extra_css %}{% endblock %}
 </head>
@@ -109,7 +109,7 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
