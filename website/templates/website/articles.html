@@ -1,0 +1,57 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Actualités - OIC International{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Actualités</h1>
+        <p class="page-subtitle">Restez informé de nos activités et projets</p>
+    </div>
+</section>
+
+<section class="articles-page">
+    <div class="container">
+        {% if articles %}
+        <div class="articles-grid-full">
+            {% for article in articles %}
+            <article class="article-card-large">
+                {% if article.image %}
+                <div class="article-image-large">
+                    <a href="{% url 'article_detail' article.slug %}">
+                        <img src="{{ article.image.url }}" alt="{{ article.titre }}">
+                    </a>
+                </div>
+                {% endif %}
+                <div class="article-content-large">
+                    <div class="article-meta">
+                        <span class="article-date">
+                            <i class="far fa-calendar"></i> 
+                            {{ article.date_publication|date:"d M Y"|default:article.date_creation|date:"d M Y" }}
+                        </span>
+                        <span class="article-author">
+                            <i class="far fa-user"></i> {{ article.auteur }}
+                        </span>
+                    </div>
+                    <h2 class="article-title-large">
+                        <a href="{% url 'article_detail' article.slug %}">{{ article.titre }}</a>
+                    </h2>
+                    <p class="article-excerpt-large">{{ article.contenu|truncatewords:40|striptags }}</p>
+                    <a href="{% url 'article_detail' article.slug %}" class="article-link-large">
+                        Lire la suite <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-newspaper"></i>
+            <h3>Aucun article disponible pour le moment</h3>
+            <p>Revenez bientôt pour découvrir nos actualités.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

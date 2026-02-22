@@ -1,0 +1,62 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Projets - OIC International{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Nos Projets</h1>
+        <p class="page-subtitle">Des initiatives qui transforment l'agriculture</p>
+    </div>
+</section>
+
+<section class="projects-page">
+    <div class="container">
+        {% if projets %}
+        <div class="projects-grid-full">
+            {% for projet in projets %}
+            <div class="project-card-large">
+                {% if projet.image %}
+                <div class="project-image-large">
+                    <img src="{{ projet.image.url }}" alt="{{ projet.titre }}">
+                </div>
+                {% endif %}
+                <div class="project-content-large">
+                    <div class="project-header">
+                        <span class="project-status status-{{ projet.statut }}">{{ projet.get_statut_display }}</span>
+                        <h2 class="project-title-large">{{ projet.titre }}</h2>
+                    </div>
+                    <p class="project-description-full">{{ projet.description }}</p>
+                    <div class="project-meta-full">
+                        <div class="project-meta-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <div>
+                                <strong>Date de début:</strong>
+                                <span>{{ projet.date_debut|date:"d M Y" }}</span>
+                            </div>
+                        </div>
+                        {% if projet.date_fin %}
+                        <div class="project-meta-item">
+                            <i class="far fa-calendar-check"></i>
+                            <div>
+                                <strong>Date de fin:</strong>
+                                <span>{{ projet.date_fin|date:"d M Y" }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-project-diagram"></i>
+            <h3>Aucun projet disponible pour le moment</h3>
+            <p>Revenez bientôt pour découvrir nos projets.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

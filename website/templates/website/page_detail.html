@@ -1,0 +1,20 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}{{ page.titre }} - OIC International{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">{{ page.titre }}</h1>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container">
+        <div class="page-content-wrapper">
+            {{ page.contenu|safe|linebreaks }}
+        </div>
+    </div>
+</section>
+{% endblock %}

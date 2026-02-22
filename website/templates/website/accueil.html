@@ -1,0 +1,142 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Accueil - OIC International{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">OIC International</h1>
+            <p class="hero-subtitle">Transformation de l'agriculture pour un avenir durable</p>
+            <p class="hero-description">Nous accompagnons les agriculteurs dans le développement de pratiques agricoles durables et rentables.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'services' %}" class="btn btn-primary">Nos Services</a>
+                <a href="{% url 'contact' %}" class="btn btn-secondary">Nous Contacter</a>
+            </div>
+        </div>
+    </div>
+    <div class="hero-shape">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Services Section -->
+{% if services %}
+<section class="services-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Nos Services</h2>
+            <p class="section-subtitle">Des solutions complètes pour votre agriculture</p>
+        </div>
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas {{ service.icone }}"></i>
+                </div>
+                <h3 class="service-title">{{ service.nom }}</h3>
+                <p class="service-description">{{ service.description|truncatewords:20 }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'services' %}" class="btn btn-outline">Voir tous les services</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Projects Section -->
+{% if projets %}
+<section class="projects-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Nos Projets</h2>
+            <p class="section-subtitle">Des initiatives qui transforment l'agriculture</p>
+        </div>
+        <div class="projects-grid">
+            {% for projet in projets %}
+            <div class="project-card">
+                {% if projet.image %}
+                <div class="project-image">
+                    <img src="{{ projet.image.url }}" alt="{{ projet.titre }}">
+                </div>
+                {% endif %}
+                <div class="project-content">
+                    <span class="project-status status-{{ projet.statut }}">{{ projet.get_statut_display }}</span>
+                    <h3 class="project-title">{{ projet.titre }}</h3>
+                    <p class="project-description">{{ projet.description|truncatewords:25 }}</p>
+                    <div class="project-meta">
+                        <span><i class="far fa-calendar"></i> {{ projet.date_debut|date:"M Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'projets' %}" class="btn btn-outline">Voir tous les projets</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- News Section -->
+{% if articles %}
+<section class="news-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Dernières Actualités</h2>
+            <p class="section-subtitle">Restez informé de nos activités</p>
+        </div>
+        <div class="articles-grid">
+            {% for article in articles %}
+            <article class="article-card">
+                {% if article.image %}
+                <div class="article-image">
+                    <a href="{% url 'article_detail' article.slug %}">
+                        <img src="{{ article.image.url }}" alt="{{ article.titre }}">
+                    </a>
+                </div>
+                {% endif %}
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-date">
+                            <i class="far fa-calendar"></i> 
+                            {{ article.date_publication|date:"d M Y"|default:article.date_creation|date:"d M Y" }}
+                        </span>
+                        <span class="article-author">
+                            <i class="far fa-user"></i> {{ article.auteur }}
+                        </span>
+                    </div>
+                    <h3 class="article-title">
+                        <a href="{% url 'article_detail' article.slug %}">{{ article.titre }}</a>
+                    </h3>
+                    <p class="article-excerpt">{{ article.contenu|truncatewords:20|striptags }}</p>
+                    <a href="{% url 'article_detail' article.slug %}" class="article-link">Lire la suite <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'articles' %}" class="btn btn-outline">Voir toutes les actualités</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Prêt à transformer votre agriculture ?</h2>
+            <p class="cta-text">Rejoignez-nous dans notre mission de développement agricole durable</p>
+            <a href="{% url 'contact' %}" class="btn btn-primary btn-large">Contactez-nous</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

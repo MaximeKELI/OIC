@@ -1,0 +1,72 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}{{ article.titre }} - OIC International{% endblock %}
+
+{% block content %}
+<article class="article-detail">
+    <div class="container">
+        <div class="article-detail-header">
+            <div class="article-meta">
+                <span class="article-date">
+                    <i class="far fa-calendar"></i> 
+                    {{ article.date_publication|date:"d M Y"|default:article.date_creation|date:"d M Y" }}
+                </span>
+                <span class="article-author">
+                    <i class="far fa-user"></i> {{ article.auteur }}
+                </span>
+            </div>
+            <h1 class="article-detail-title">{{ article.titre }}</h1>
+        </div>
+        
+        {% if article.image %}
+        <div class="article-detail-image">
+            <img src="{{ article.image.url }}" alt="{{ article.titre }}">
+        </div>
+        {% endif %}
+        
+        <div class="article-detail-content">
+            {{ article.contenu|safe|linebreaks }}
+        </div>
+        
+        <div class="article-detail-footer">
+            <a href="{% url 'articles' %}" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Retour aux actualités
+            </a>
+        </div>
+    </div>
+</article>
+
+{% if articles_recents %}
+<section class="related-articles">
+    <div class="container">
+        <h2 class="section-title">Articles récents</h2>
+        <div class="articles-grid">
+            {% for article in articles_recents %}
+            <article class="article-card">
+                {% if article.image %}
+                <div class="article-image">
+                    <a href="{% url 'article_detail' article.slug %}">
+                        <img src="{{ article.image.url }}" alt="{{ article.titre }}">
+                    </a>
+                </div>
+                {% endif %}
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="article-date">
+                            <i class="far fa-calendar"></i> 
+                            {{ article.date_publication|date:"d M Y"|default:article.date_creation|date:"d M Y" }}
+                        </span>
+                    </div>
+                    <h3 class="article-title">
+                        <a href="{% url 'article_detail' article.slug %}">{{ article.titre }}</a>
+                    </h3>
+                    <a href="{% url 'article_detail' article.slug %}" class="article-link">Lire la suite <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

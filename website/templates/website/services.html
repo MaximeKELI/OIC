@@ -1,0 +1,46 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}Services - OIC International{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Nos Services</h1>
+        <p class="page-subtitle">Des solutions complètes pour votre agriculture</p>
+    </div>
+</section>
+
+<section class="services-page">
+    <div class="container">
+        {% if services %}
+        <div class="services-grid-full">
+            {% for service in services %}
+            <div class="service-card-large">
+                <div class="service-card-header">
+                    <div class="service-icon-large">
+                        <i class="fas {{ service.icone }}"></i>
+                    </div>
+                    <h2 class="service-title-large">{{ service.nom }}</h2>
+                </div>
+                {% if service.image %}
+                <div class="service-image">
+                    <img src="{{ service.image.url }}" alt="{{ service.nom }}">
+                </div>
+                {% endif %}
+                <div class="service-content">
+                    <p class="service-description-full">{{ service.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-seedling"></i>
+            <h3>Aucun service disponible pour le moment</h3>
+            <p>Revenez bientôt pour découvrir nos services.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
